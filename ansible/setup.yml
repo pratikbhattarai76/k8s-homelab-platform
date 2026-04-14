@@ -1,0 +1,23 @@
+- name: Base server setup
+  hosts: control_plane
+  become: true
+
+  tasks:
+      # This updates the packages and upgrades them too
+    - name: Update and upgrade packages
+      apt:
+        update_cache: true
+        upgrade: dist # here dist means distribution upgrade. It upgrades all packagees including ones that require adding or removing dependencies to complete the upgrade.
+
+    - name: Set timezone
+      timezone:
+        name: Asia/Kathmandu
+
+    - name: Install basic dependencies
+      apt:
+        name:
+          - curl
+          - git
+          - wget
+          - apt-transport-https
+        state: present
