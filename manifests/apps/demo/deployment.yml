@@ -7,7 +7,7 @@ kind: Deployment
 #This contains basic information about the resource
 metadata:
   name: demo #The name of the Deployment Manager.
-  namespace: default # Which namespace to put it in. Like a folder inside the cluster.
+  namespace: apps # Which namespace to put it in. Like a folder inside the cluster.
 
 # This is where you describe what I actually want
 spec:

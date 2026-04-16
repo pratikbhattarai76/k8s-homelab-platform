@@ -1,0 +1,12 @@
+apiVersion: v1 #Services live in v1
+kind: Service # I am creating a Service resource
+metadata: 
+  name: demo # Service name, also becomes its dns name inside the cluster
+  namespace: apps # Same namespace as our deployment
+spec:
+  selector:
+    app: demo # Find Pods with this label, this is the same label the deployment gives to the pods
+  ports:
+    - port: 8080 # Fort the service listens on
+      targetPort: 80 # Port it forwards traffic to on the pod
+  type: NodePort # NodePort creates a external access to the cluster. If I used ClusterIP as a type then it would be only be accessible inside the ClusterIP. Also NodePort creates another port somewhat between 3000-32767 and if i use nodeport: 8080 in above ports section then it will usually fail unless I reconfigure the cluster somehow.

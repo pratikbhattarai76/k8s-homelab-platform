@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apps
+
+--- # This seperates the multiple resources in one file
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring # For prometheus, grafana, alertmanager
