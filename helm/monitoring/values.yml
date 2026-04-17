@@ -2,8 +2,24 @@
 
 grafana:
   # adminPassword is set manually after install for security
+  persistence:
+    enabled: true
+    storageClassName: local-path
+    size: 5Gi
   ingress:
     enabled: true
     ingressClassName: traefik
     hosts:
       - grafana.pratik-labs.xyz
+
+prometheus:
+  prometheusSpec:
+    retention: 30d # Keep metrics history for 30 days
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 20Gi
