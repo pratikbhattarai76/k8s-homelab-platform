@@ -9,3 +9,12 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: monitoring # For prometheus, grafana, alertmanager
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tunnel # For cloudflared tunnel
+
+---
