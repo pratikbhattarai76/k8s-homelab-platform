@@ -1,0 +1,9 @@
+# https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+
+grafana:
+  adminPassword: admin # Change this to a secure password later
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - grafana.pratik-labs.xyz
