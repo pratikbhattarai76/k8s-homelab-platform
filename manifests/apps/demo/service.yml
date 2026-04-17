@@ -9,4 +9,8 @@ spec:
   ports:
     - port: 8080 # Fort the service listens on
       targetPort: 80 # Port it forwards traffic to on the pod
-  type: NodePort # NodePort creates a external access to the cluster. If I used ClusterIP as a type then it would be only be accessible inside the ClusterIP. Also NodePort creates another port somewhat between 3000-32767 and if i use nodeport: 8080 in above ports section then it will usually fail unless I reconfigure the cluster somehow.
+  type: ClusterIP # Default type, internal only, the Traefik handles external access
+
+      # UNCOMMENT IF WANT TO USE IN BROWSER WITHOUT INGRESS SETUP
+      #nodePort: 30080 # Optional, but without this the nodeport would crete another port as random.
+  #type: NodePort # NodePort creates a external access to the cluster. If I used ClusterIP as a type then it would be only be accessible inside the ClusterIP. Also NodePort creates another port somewhat between 30000-32767 and if i use nodeport: 8080 in above ports section then it will usually fail unless I reconfigure the cluster somehow.

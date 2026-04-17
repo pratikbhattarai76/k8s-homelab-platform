@@ -17,12 +17,12 @@ spec:
       app: demo # manage pods that have this label
 
 #The blueprint for each Pod the Deployment creates.
-  template: # when creating a pod, use this bluepring
+  template: # when creating a pod, use this blueprint
     metadata:
       labels: # gives each Pod the label app:demo so the Deployment can find them via matchLabels
         app: demo
     spec:
-      containers: #the actual container to run inside each Port
+      containers: #the actual container to run inside each pod
         - name: demo # container name
           image: nginx:alpine #which Docker image to use. Run this container
           ports:
