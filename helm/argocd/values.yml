@@ -1,0 +1,15 @@
+# https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd
+
+server:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hostname: argocd.pratik-labs.xyz
+  # Required because Traefik handles TLS termination externally via Cloudflare
+  # So ArgoCD server itself should run in insecure mode (HTTP)
+  extraArgs:
+    - --insecure
+
+configs:
+  params:
+    server.insecure: true

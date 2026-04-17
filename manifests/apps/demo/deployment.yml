@@ -11,7 +11,7 @@ metadata:
 
 # This is where you describe what I actually want
 spec:
-  replicas: 2 # Crete 2 pods. Run 2 copies of this app. If one crashes, the other keeps serving traffic. Kubernetes automatically restarts the crashed one.
+  replicas: 3 # Crete 2 pods. Run 2 copies of this app. If one crashes, the other keeps serving traffic. Kubernetes automatically restarts the crashed one.
   selector:
     matchLabels: # how the Deployment finds which pods belong to it. It looks for Pods with label app: demo
       app: demo # manage pods that have this label

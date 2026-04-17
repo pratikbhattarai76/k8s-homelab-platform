@@ -18,3 +18,8 @@ metadata:
   name: tunnel # For cloudflared tunnel
 
 ---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argocd # For Argo CD GitOps
