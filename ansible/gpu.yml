@@ -1,0 +1,37 @@
+- name: Install NVIDIA drivers and container toolkit
+  hosts: control_plane
+  become: true
+
+  tasks:
+    - name: Install NVIDIA driver (580)
+      apt:
+        name: nvidia-driver-580
+        state: present
+        update_cache: true
+
+    - name: Add NVIDIA container toolkit GPG key
+      apt_key:
+        url: https://nvidia.github.io/libnvidia-container/gpgkey
+        keyring: /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+        state: present
+
+    - name: Add NVIDIA container toolkit repository
+      apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /"
+        filename: nvidia-container-toolkit
+        state: present
+        update_cache: true
+
+    - name: Install NVIDIA container toolkit
+      apt:
+        name: nvidia-container-toolkit
+        state: present
+
+    - name: Configure containerd for NVIDIA runtime
+      shell: nvidia-ctk runtime configure --runtime=containerd
+      args:
+        creates: /etc/cni/net.d/.nvidia-configured
+
+    - name: Reboot required note
+      debug:
+        msg: "Reboot the server after this playbook finishes to activate the NVIDIA driver."
