@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfolio
+  namespace: apps
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: portfolio
+  template:
+    metadata:
+      labels:
+        app: portfolio
+    spec:
+      containers:
+        - name: portfolio
+          image: ghcr.io/pratikbhattarai76/portfolio-app:latest
+          ports:
+            - containerPort: 4321
+          envFrom:
+            - secretRef:
+                name: portfolio-env
+
