@@ -34,3 +34,11 @@
         fstype: ext4
         opts: defaults
         state: mounted
+
+    - name: Set storage ownership
+      file:
+        path: /mnt/storage
+        owner: pratikserver
+        group: pratikserver
+        recurse: true
+        state: directory
