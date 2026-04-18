@@ -21,3 +21,16 @@
           - wget
           - apt-transport-https
         state: present
+
+    - name: Create storage mount point
+      file:
+        path: /mnt/storage
+        state: directory
+
+    - name: Mount HDD storage
+      mount:
+        path: /mnt/storage
+        src: UUID=4250e634-f248-4591-b2b0-6d12919f6c8e
+        fstype: ext4
+        opts: defaults
+        state: mounted
