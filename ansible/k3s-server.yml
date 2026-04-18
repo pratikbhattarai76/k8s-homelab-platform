@@ -8,7 +8,7 @@
       args:
         creates: /usr/local/bin/k3s
 
-    - name: Wait for k3s to be rady
+    - name: Wait for k3s to be ready
       wait_for:
         path: /etc/rancher/k3s/k3s.yaml
         timeout: 60
