@@ -4,7 +4,7 @@
 
   tasks:
     - name: Download and install k3s
-      shell: curl -sfL https://get.k3s.io | sh -
+      shell: curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--tls-san k8s-server.taile34db4.ts.net --tls-san 192.168.1.100" sh -
       args:
         creates: /usr/local/bin/k3s
 
