@@ -18,6 +18,7 @@ A single-node Kubernetes homelab running on bare metal, built from scratch with 
 ```
 .
 ├── ansible
+│   ├── gpu.yml
 │   ├── inventory.ini
 │   ├── k3s-server.yml
 │   ├── kubeconfig.yml
@@ -25,11 +26,14 @@ A single-node Kubernetes homelab running on bare metal, built from scratch with 
 ├── docs
 │   ├── decisions.md
 │   ├── gitops.md
+│   ├── immich.md
 │   ├── monitoring.md
 │   ├── networking.md
 │   └── setup.md
 ├── helm
 │   ├── argocd
+│   │   └── values.yml
+│   ├── immich
 │   │   └── values.yml
 │   └── monitoring
 │       └── values.yml
@@ -39,15 +43,21 @@ A single-node Kubernetes homelab running on bare metal, built from scratch with 
 │   │   │   ├── deployment.yml
 │   │   │   ├── ingress.yml
 │   │   │   └── service.yml
+│   │   ├── immich
+│   │   │   ├── postgres.yml
+│   │   │   └── pvc.yml
 │   │   └── portfolio
 │   │       ├── deployment.yml
 │   │       ├── ingress.yml
 │   │       └── service.yml
+│   ├── gpu
+│   │   └── runtimeclass.yml
 │   ├── namespaces
 │   │   └── namespaces.yml
 │   └── tunnel
 │       └── deployment.yml
 └── README.md
+
 ```
 
 ## Deployed Services
