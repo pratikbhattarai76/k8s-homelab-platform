@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gotify
+  namespace: monitoring
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: notify.pratik-labs.xyz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gotify
+                port:
+                  number: 80
+
