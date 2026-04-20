@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: notify.pratik-labs.xyz
+    - host: gotify.pratik-labs.xyz
       http:
         paths:
           - path: /
