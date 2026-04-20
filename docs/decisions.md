@@ -57,3 +57,29 @@ This is the simplest approach for my homelab.
 Ansible automates the boring stuff like installing packages, setting timezone, installing k3s. Without it, SSHing and running commands manually means creating a snowflake server that can't be reproduced.
 
 Ansible is agentless (just SSH)
+
+## SSD for Metadata, HDD for Photos
+
+The server has two drives: a 120GB SSD and a 1TB HDD. The split is deliberate. PostgreSQL (metadata, face embeddings, vector indexes) sits on the SSD for fast queries. Photos, thumbnails, encoded videos, and uploads sit on the HDD because they're large but sequentially accessed. This keeps the SSD from filling up while giving the database the I/O performance it benefits from most.
+
+## CloudNativePG over Bitnami Postgres
+
+Immich requires PostgreSQL with the VectorChord extension for vector similarity search. The Immich Helm chart removed its bundled Bitnami Postgres subchart because it caused upgrade issues and didn't align well with the custom pgvecto.rs/VectorChord images.
+
+CloudNativePG is a Kubernetes operator purpose-built for managing PostgreSQL lifecycle — it handles initialization, failover, and uses the correct `cloudnative-vectorchord` image with `vchord.so` preloaded. For a single-instance homelab setup it might seem like overkill, but it's the approach Immich officially recommends and it's what production clusters use.
+
+## GPU in Kubernetes via NVIDIA Device Plugin
+
+Immich's machine learning (face detection, OCR, smart search) benefits significantly from GPU acceleration. Rather than running ML outside the cluster, the GPU is exposed to Kubernetes through three layers: the NVIDIA driver on the host, the NVIDIA container toolkit for containerd, and the NVIDIA k8s device plugin that registers `nvidia.com/gpu` as a schedulable resource.
+
+The ML pod requests the GPU via a resource limit and runs the CUDA variant of the Immich image. This keeps everything inside the cluster with no special-case processes running on the host.
+
+## Tailscale for Remote kubectl Access
+
+k3s generates TLS certificates for the API server. By default, these only cover `127.0.0.1` and the local IP. Adding the Tailscale MagicDNS hostname (`k8s-server.taile34db4.ts.net`) as a TLS SAN means kubectl works from anywhere on the Tailscale network without certificate errors.
+
+Using the Tailscale hostname instead of the IP means the kubeconfig stays valid even if the Tailscale IP changes (e.g. after reinstalling Tailscale). MagicDNS always resolves to the current IP.
+
+## External Library Separate from Immich Library
+
+Existing photos are mounted at `/external` inside the Immich container, separate from Immich's managed `/data` directory. This avoids conflicts — Immich creates its own folder structure (library, thumbs, upload, encoded-video) under `/data`, and pointing an external library to the same path causes errors. Keeping them separate means Immich can scan existing photos without interfering with its own storage

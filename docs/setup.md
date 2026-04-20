@@ -44,7 +44,7 @@ The inventory file (`ansible/inventory.ini`) tells Ansible how to reach the serv
 
 ```ini
 [control_plane]
-homelab ansible_host=192.168.1.100 ansible_user=pratikserver ansible_ssh_private_key_file=~/.ssh/id_ed25519
+local ansible_host=192.168.1.100 ansible_user=pratikserver ansible_ssh_private_key_file=~/.ssh/id_ed25519
 ```
 
 Test connectivity:
@@ -115,11 +115,51 @@ This creates four namespaces:
 - `monitoring` — Prometheus, Grafana, Alertmanager
 - `tunnel` — cloudflared tunnel
 - `argocd` — Argo CD GitOps controller
+- `immich` - Immich photo management
 
 ## Next Steps
 
 With the cluster running and namespaces created, proceed to:
 
-- [Networking](networking.md) — Set up Cloudflare Tunnel and deploy apps
-- [Monitoring](monitoring.md) — Install the monitoring stack
-- [GitOps & CI/CD](gitops.md) — Set up Argo CD and automated deployments
+- [Networking](networking.md) - Set up Cloudflare Tunnel and deploy apps
+- [Monitoring](monitoring.md) - Install the monitoring stack
+- [GitOps & CI/CD](gitops.md) - Set up Argo CD and automated deployments
+- [Immich](immich.md) - Deploy photo management
+
+## GPU Setup (Optional)
+
+If the server has an NVIDIA GPU, the `gpu.yml` playbook installs the driver and container toolkit:
+
+```bash
+ansible-playbook -i ansible/inventory.ini ansible/gpu.yml --ask-become-pass
+```
+
+After the playbook completes, reboot the server:
+
+```bash
+ssh k8s-local "sudo reboot"
+```
+
+Verify the GPU is detected:
+
+```bash
+ssh k8s-local "nvidia-smi"
+```
+
+The NVIDIA device plugin also needs to be installed in the cluster and the RuntimeClass created. See [Immich docs](immich.md) for the full GPU setup used by Immich's machine learning.
+
+## Remote Access via Tailscale
+
+k3s is installed with TLS SANs for both the local IP and the Tailscale MagicDNS hostname:
+
+```
+--tls-san k8s-server.taile34db4.ts.net --tls-san 192.168.1.100
+```
+
+Update the kubeconfig to use the Tailscale hostname so kubectl works from anywhere:
+
+```bash
+sed -i 's|https://192.168.1.100:6443|https://k8s-server.taile34db4.ts.net:6443|' ~/.kube/config
+```
+
+This works from both the local network and remote locations. Tailscale automatically picks the fastest path.

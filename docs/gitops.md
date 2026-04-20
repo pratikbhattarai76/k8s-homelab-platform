@@ -43,7 +43,11 @@ Argo CD manages these applications, all with auto-sync enabled:
 | namespaces | `manifests/namespaces` | default |
 | tunnel | `manifests/tunnel` | tunnel |
 
-The monitoring stack is managed manually via Helm, not through Argo CD.
+The following are managed manually via Helm, not through Argo CD:
+
+- Monitoring stack (kube-prometheus-stack)
+- Argo CD itself
+- Immich
 
 ### How Argo CD Stores Data
 

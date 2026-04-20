@@ -59,6 +59,7 @@ A single-node Kubernetes homelab running on bare metal, built from scratch with 
 | Grafana | grafana.pratik-labs.xyz | Helm |
 | Alertmanager | alertmanager.pratik-labs.xyz | Helm |
 | Argo CD | argocd.pratik-labs.xyz | Helm |
+| Immich | photos.pratik-labs.xyz | Helm|
 
 ## CI/CD Pipeline
 
@@ -70,8 +71,9 @@ No manual intervention. Push code, get a deployment.
 
 ## Documentation
 
-- **[Setup Guide](docs/setup.md)** — Server setup, k3s installation, and initial configuration
-- **[Networking](docs/networking.md)** — Cloudflare Tunnel, Traefik ingress, and traffic flow
-- **[Monitoring](docs/monitoring.md)** — Prometheus, Grafana, and Alertmanager configuration
-- **[GitOps & CI/CD](docs/gitops.md)** — Argo CD setup and automated deployment pipeline
-- **[Decisions](docs/decisions.md)** — Why k3s, why Traefik, and other architectural choices
+- **[Setup Guide](docs/setup.md)** - Server setup, k3s installation, and initial configuration
+- **[Networking](docs/networking.md)** - Cloudflare Tunnel, Traefik ingress, and traffic flow
+- **[Monitoring](docs/monitoring.md)** - Prometheus, Grafana, and Alertmanager configuration
+- **[GitOps & CI/CD](docs/gitops.md)** - Argo CD setup and automated deployment pipeline
+- **[Decisions](docs/decisions.md)** - Why k3s, why Traefik, and other architectural choices
+- **[Immich](/docs/immich.md)** - Photo management with GPU acceleration and external libraries 
