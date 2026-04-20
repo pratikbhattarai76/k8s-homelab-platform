@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: 
+  name: uptime-kuma
+  namespace: monitoring
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: status.pratik-labs.xyz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: uptime-kuma
+                port:
+                  number: 80
+
