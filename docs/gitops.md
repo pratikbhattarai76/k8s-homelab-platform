@@ -42,6 +42,8 @@ Argo CD manages these applications, all with auto-sync enabled:
 | portfolio | `manifests/apps/portfolio` | apps |
 | namespaces | `manifests/namespaces` | default |
 | tunnel | `manifests/tunnel` | tunnel |
+| uptime-kuma | `manifests/apps/uptime-kuma` | monitoring |
+| gotify | `manifests/apps/gotify` | monitoring |
 
 The following are managed manually via Helm, not through Argo CD:
 

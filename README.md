@@ -43,12 +43,22 @@ A single-node Kubernetes homelab running on bare metal, built from scratch with 
 │   │   │   ├── deployment.yml
 │   │   │   ├── ingress.yml
 │   │   │   └── service.yml
+│   │   ├── gotify
+│   │   │   ├── deployment.yml
+│   │   │   ├── ingress.yml
+│   │   │   ├── pvc.yml
+│   │   │   └── service.yml
 │   │   ├── immich
 │   │   │   ├── postgres.yml
 │   │   │   └── pvc.yml
-│   │   └── portfolio
+│   │   ├── portfolio
+│   │   │   ├── deployment.yml
+│   │   │   ├── ingress.yml
+│   │   │   └── service.yml
+│   │   └── uptime-kuma
 │   │       ├── deployment.yml
 │   │       ├── ingress.yml
+│   │       ├── pvc.yml
 │   │       └── service.yml
 │   ├── gpu
 │   │   └── runtimeclass.yml
@@ -70,6 +80,8 @@ A single-node Kubernetes homelab running on bare metal, built from scratch with 
 | Alertmanager | alertmanager.pratik-labs.xyz | Helm |
 | Argo CD | argocd.pratik-labs.xyz | Helm |
 | Immich | photos.pratik-labs.xyz | Helm|
+| Uptime Kuma | status.pratik-labs.xyz | Argo CD |
+| Gotify | gotify.pratik-labs.xyz | Argo CD |
 
 ## CI/CD Pipeline
 
