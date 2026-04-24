@@ -1,0 +1,87 @@
+# https://github.com/nextcloud/helm
+
+nextcloud:
+  host: nextcloud.pratik-labs.xyz
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-admin-secret
+    usernameKey: username
+    passwordKey: password
+  extraVolumes:
+    - name: hdd-storage
+      persistentVolumeClaim:
+        claimName: nextcloud-hdd-pvc
+  extraVolumeMounts:
+    - name: hdd-storage
+      mountPath: /external/storage
+  configs:
+    proxy.config.php: |-
+      <?php
+      $CONFIG = array (
+        'trusted_proxies' => array(
+          0 => '127.0.0.1',
+          1 => '10.0.0.0/8',
+        ),
+        'overwriteprotocol' => 'https',
+        'overwrite.cli.url' => 'https://nextcloud.pratik-labs.xyz',
+        'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
+        'default_phone_region' => 'NP',
+      );
+
+ingress:
+  enabled: true
+  className: traefik
+  annotations:
+    traefik.ingress.kubernetes.io/custom-request-headers: "X-Forwarded-Proto: https"
+  path: /
+  pathType: Prefix
+
+phpClientHttpsFix:
+  enabled: true
+  protocol: https
+
+internalDatabase:
+  enabled: false
+
+externalDatabase:
+  enabled: true
+  type: postgresql
+  host: nextcloud-postgresql
+  database: nextcloud
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-db-secret
+    usernameKey: db-username
+    passwordKey: db-password
+
+postgresql:
+  enabled: true
+  global:
+    postgresql:
+      auth:
+        existingSecret: nextcloud-db-secret
+        secretKeys:
+          adminPasswordKey: db-password
+          userPasswordKey: db-password
+        username: nextcloud
+        database: nextcloud
+  primary:
+    persistence:
+      enabled: true
+      storageClass: local-path
+      size: 5Gi
+
+persistence:
+  enabled: true
+  storageClass: local-path
+  size: 20Gi
+
+nextcloudData:
+  enabled: false
+
+service:
+  type: ClusterIP
+  port: 80
+
+cronjob:
+  enabled: true

@@ -30,3 +30,10 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: immich # For immich photo management
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nextcloud # For Nextcloud

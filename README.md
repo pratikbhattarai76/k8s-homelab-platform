@@ -35,7 +35,9 @@ A single-node Kubernetes homelab running on bare metal, built from scratch with 
 │   │   └── values.yml
 │   ├── immich
 │   │   └── values.yml
-│   └── monitoring
+│   ├── monitoring
+│   │   └── values.yml
+│   └── nextcloud
 │       └── values.yml
 ├── manifests
 │   ├── apps
@@ -50,6 +52,8 @@ A single-node Kubernetes homelab running on bare metal, built from scratch with 
 │   │   │   └── service.yml
 │   │   ├── immich
 │   │   │   ├── postgres.yml
+│   │   │   └── pvc.yml
+│   │   ├── nextcloud
 │   │   │   └── pvc.yml
 │   │   ├── portfolio
 │   │   │   ├── deployment.yml
@@ -68,6 +72,7 @@ A single-node Kubernetes homelab running on bare metal, built from scratch with 
 │       └── deployment.yml
 └── README.md
 
+
 ```
 
 ## Deployed Services
@@ -82,6 +87,7 @@ A single-node Kubernetes homelab running on bare metal, built from scratch with 
 | Immich | photos.pratik-labs.xyz | Helm|
 | Uptime Kuma | status.pratik-labs.xyz | Argo CD |
 | Gotify | gotify.pratik-labs.xyz | Argo CD |
+| Nextcloud | nextcloud.pratik-labs.xyz | Helm |
 
 ## CI/CD Pipeline
 
