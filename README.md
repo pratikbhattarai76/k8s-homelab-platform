@@ -2,6 +2,10 @@
 
 A single-node Kubernetes homelab running on bare metal, built from scratch with infrastructure as code. Every component is version-controlled - no snowflake configurations.
 
+# Architecture
+
+![K8s Architecture](docs/architecture/architecture.png)
+
 ## Tech Stack
 
 - **OS:** Ubuntu 24.04 LTS Server
