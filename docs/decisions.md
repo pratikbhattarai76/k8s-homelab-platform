@@ -83,3 +83,15 @@ Using the Tailscale hostname instead of the IP means the kubeconfig stays valid 
 ## External Library Separate from Immich Library
 
 Existing photos are mounted at `/external` inside the Immich container, separate from Immich's managed `/data` directory. This avoids conflicts — Immich creates its own folder structure (library, thumbs, upload, encoded-video) under `/data`, and pointing an external library to the same path causes errors. Keeping them separate means Immich can scan existing photos without interfering with its own storage
+
+## Bitnami PostgreSQL for Nextcloud over CloudNativePG
+
+Immich uses CloudNativePG because it requires the VectorChord extension for vector similarity search — a custom PostgreSQL image that the CloudNativePG operator manages. Nextcloud has no such requirement. It works with standard PostgreSQL.
+
+The Nextcloud Helm chart bundles the Bitnami PostgreSQL subchart, which handles deployment, initialization, and persistence automatically. Using CloudNativePG here would add operator complexity for no benefit. Different tools for different requirements.
+
+## Nextcloud External Storage over Direct Mount
+
+Nextcloud's application data (config, app state) lives on the SSD via `local-path`. The HDD is mounted separately at `/external/storage` and surfaced through the External Storage app.
+
+This keeps Nextcloud's own data on fast storage while providing web access to the HDD. It also means Nextcloud doesn't "own" the HDD files — they remain accessible independently, and multiple apps (Immich, Nextcloud) can reference the same physical storage without conflict.
