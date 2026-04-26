@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: portfolio
-          image: ghcr.io/pratikbhattarai76/portfolio-app:commit-0663ff6
+          image: ghcr.io/pratikbhattarai76/portfolio-app:commit-449c874
           ports:
             - containerPort: 4321
           envFrom:
